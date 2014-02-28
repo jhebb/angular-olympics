@@ -1,1 +1,36 @@
-<p>This is the partial for view 1.</p>
+<h1> Olympic Medal Counts Revisited</h1>
+
+<p class="lead">While watching the Sochi 2014 Winter Olympics, it occurred to me that ranking countries by gold medals first, followed by silvers and then bronze probably isn't the best way to rank countries. What if we weighted the medals and kept track of points instead?</p>
+
+<p>If we tallied up the total points from each countries gold, silver and bronze medals based on their assigned point values, we could give each country a total overall "score". That way a country that had just one gold medal less than another, but far more silver or bronze medals would be ranked higher as a reflection of total performance.</p>
+
+<table class="table table-hover table-striped table-responsive" ng-controller="MyCtrl1">
+	<thead>
+		<tr>
+			<th>Country</th>
+			<th>Rank</th>
+			<th>Gold</th>
+			<th>Gold Points</th>
+			<th>Silver</th>
+			<th>Silver Points</th>
+			<th>Bronze</th>
+			<th>Bronze Points</th>
+			<th>Total Medals</th>
+			<th>Total Points</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="country in countries | filter:rankFilter">
+			<td>{{country.country_name}}</td>
+			<td>{{country.rank}}</td>
+			<td>{{country.gold_count}}</td>
+			<td>{{country.gold_count * 3}}</td>
+			<td>{{country.silver_count}}</td>
+			<td>{{country.silver_count * 2}}</td>
+			<td>{{country.bronze_count}}</td>
+			<td>{{country.bronze_count * 1}}</td>
+			<td>{{country.medal_count}}</td>
+			<td>{{ (country.gold_count * 3) + (country.silver_count * 2) + (country.bronze_count * 1) }}</td>
+		</tr>
+	</tbody>
+</table>
