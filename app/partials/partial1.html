@@ -19,19 +19,34 @@
 
 	<h2>Try changing the medal values for yourself:</h2>
 
-	<button ng-click="medalValues(1,1,1)" class="btn btn-default">Normal</button>
-	<button ng-click="medalValues(3,2,1)" class="btn btn-default">Weighted</button>
-	<button ng-click="medalValues(10,3,1)" class="btn btn-default">Gold weighted</button>
+	<div class="btn-group">
+		<button ng-click="medalValues(1,1,1)" class="btn btn-default">Normal</button>
+		<button ng-click="medalValues(3,2,1)" class="btn btn-success">Weighted</button>
+		<button ng-click="medalValues(10,3,1)" class="btn btn-info">Gold weighted</button>
+	</div>
 
-	Gold value: <input ng-model="gold_value" ng-change="updatePoints()" />
-	Silver value: <input ng-model="silver_value" ng-change="updatePoints()" />
-	Bronze value: <input ng-model="bronze_value" ng-change="updatePoints()" />
+	<div class="medal-values form-inline">
+		<div class="form-group">
+			<label for="">Gold value:</label>
+			<input class="form-control" ng-model="gold_value" ng-change="updatePoints()" />
+		</div>
+		<div class="form-group">
+			<label>Silver value:</label>
+			<input class="form-control" ng-model="silver_value" ng-change="updatePoints()" />
+		</div>
+		<div class="form-group">
+			<label>Bronze value:</label>
+			<input class="form-control" ng-model="bronze_value" ng-change="updatePoints()" />
+		</div>
+	</div>
+
 
 
 	<table class="table table-hover table-striped table-responsive">
 		<thead>
 			<tr>
 				<th>Country</th>
+				<th>Sorted Rank</th>
 				<th>Rank</th>
 				<th>Gold</th>
 				<th>Gold Points</th>
@@ -41,12 +56,12 @@
 				<th>Bronze Points</th>
 				<th>Total Medals</th>
 				<th>Total Points</th>
-				<th>Sorted Rank</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr ng-repeat="country in countries | orderBy : '-total_points'">
 				<td><strong>{{country.country.text}}</strong></td>
+				<td>{{$index + 1}}</td>
 				<td>{{country.index}}</td>
 				<td>{{country.gold}}</td>
 				<td>{{country.gold_points}}</td>
@@ -56,7 +71,6 @@
 				<td>{{country.bronze_points}}</td>
 				<td>{{country.total}}</td>
 				<td>{{country.total_points}}</td>
-				<td>{{$index + 1}}</td>
 			</tr>
 		</tbody>
 	</table>
