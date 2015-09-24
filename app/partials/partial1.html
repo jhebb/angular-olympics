@@ -8,58 +8,59 @@
 <ul>
 	<li><s>Add fields to model dynamically (medal counts, total count) (http://stackoverflow.com/questions/14488912/adding-a-computed-field-to-every-element-of-an-array-in-an-angularjs-model)</s></li>
 	<li><s>Add default orderby on total point count</s></li>
-	<li>Allow sorting by click (angularjs supports this somehow)</li>
 	<li><s>Allow changing of the medal values (this may prevent adding fields to model)</s></li>
+	<li><s>Allow sorting by click (angularjs supports this somehow)</s></li>
+	<li>Improve sorting - carry over sort order (https://docs.angularjs.org/api/ng/filter/orderBy)</li>
+	<li>Add rankings for other fields (total medals, add ng-click values to reset sorting)</li>
 </ul>
 
-<div class="main" ng-controller="MyCtrl1">
+<div class="main">
 
-	<!-- <div>{{countries}}</div> -->
-	<!-- <div>{{name}}</div> -->
-
-	<h2>Try changing the medal values for yourself:</h2>
-
-	<div class="btn-group">
-		<button ng-click="medalValues(1,1,1)" class="btn btn-default">Normal</button>
-		<button ng-click="medalValues(3,2,1)" class="btn btn-success">Weighted</button>
-		<button ng-click="medalValues(10,3,1)" class="btn btn-info">Gold weighted</button>
-	</div>
+	<div class="alert alert-info" role="alert">Try changing the medal values for yourself or use one of the presets</div>
 
 	<div class="medal-values form-inline">
-		<div class="form-group">
-			<label for="">Gold value:</label>
-			<input class="form-control" ng-model="gold_value" ng-change="updatePoints()" />
-		</div>
-		<div class="form-group">
-			<label>Silver value:</label>
-			<input class="form-control" ng-model="silver_value" ng-change="updatePoints()" />
-		</div>
-		<div class="form-group">
-			<label>Bronze value:</label>
-			<input class="form-control" ng-model="bronze_value" ng-change="updatePoints()" />
+		<div class="row">
+			<div class="form-group col-xs-4">
+				<label for="">Gold value:</label>
+				<input class="form-control" ng-model="gold_value" ng-change="updatePoints()" />
+			</div>
+			<div class="form-group col-xs-4">
+				<label>Silver value:</label>
+				<input class="form-control" ng-model="silver_value" ng-change="updatePoints()" />
+			</div>
+			<div class="form-group col-xs-4">
+				<label>Bronze value:</label>
+				<input class="form-control" ng-model="bronze_value" ng-change="updatePoints()" />
+			</div>
 		</div>
 	</div>
 
+	<div class="medal-values-btns btn-group">
+		<button ng-click="medalValues(1,1,1)" class="btn btn-default">Normal</button>
+		<button ng-click="medalValues(3,2,1)" class="btn btn-success">Weighted</button>
+		<button ng-click="medalValues(5,3,1)" class="btn btn-info">Heavy weighted</button>
+		<button ng-click="medalValues(10,5,1)" class="btn btn-warning">Very heavy weighted</button>
+		<button ng-click="medalValues(25,5,1)" class="btn btn-danger">Extremely weighted</button>
+	</div>
 
-
-	<table class="table table-hover table-striped table-responsive">
+	<table class="table table-hover table-striped table-responsive table-olympic-stats">
 		<thead>
 			<tr>
 				<th>Country</th>
 				<th>Sorted Rank</th>
-				<th>Rank</th>
+				<th><a href="" ng-click="sortType = 'index'; sortReverse = !sortReverse">Rank <span ng-show="sortType == 'index'" ng-class="sortReverse ? 'fa-caret-up' : 'fa-caret-down'" class="fa"></span></a></th>
 				<th>Gold</th>
-				<th>Gold Points</th>
+				<th><a href="" ng-click="sortType = 'gold_points'; sortReverse = !sortReverse">Gold Points <span ng-show="sortType == 'gold_points'" ng-class="sortReverse ? 'fa-caret-up' : 'fa-caret-down'" class="fa"></span></a></th>
 				<th>Silver</th>
 				<th>Silver Points</th>
 				<th>Bronze</th>
 				<th>Bronze Points</th>
 				<th>Total Medals</th>
-				<th>Total Points</th>
+				<th><a href="" ng-click="sortType = 'total_points'; sortReverse = !sortReverse">Total Points <span ng-show="sortType == 'total_points'" ng-class="sortReverse ? 'fa-caret-up' : 'fa-caret-down'" class="fa"></span></a></th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="country in countries | orderBy : '-total_points'">
+			<tr ng-repeat="country in countries | orderBy:sortType:sortReverse">
 				<td><strong>{{country.country.text}}</strong></td>
 				<td>{{$index + 1}}</td>
 				<td>{{country.index}}</td>

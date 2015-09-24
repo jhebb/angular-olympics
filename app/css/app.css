@@ -28,3 +28,16 @@
   content: "";
   padding: 0;
 }
+
+.medal-values-btns {
+  /*margin-bottom: 1em;*/
+  margin-top: 1em;
+}
+
+.medal-values {
+  margin-top: 1em;
+}
+
+.table-olympic-stats {
+  margin-top: 1em;
+}
