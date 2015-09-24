@@ -1,4 +1,4 @@
-<h1> Olympic Medal Counts Revisited</h1>
+<h1>Olympic Medal Counts Revisited</h1>
 
 <p class="lead">While watching the Sochi 2014 Winter Olympics, it occurred to me that ranking countries by gold medals first, followed by silver and then bronze probably isn't the best way to do it. What if we weighted the medals and kept track of points instead?</p>
 
@@ -6,11 +6,15 @@
 
 <h4>To Do</h4>
 <ul>
-	<li>Add fields to model dynamically (medal counts, total count)</li>
-	<li>Add default orderby on total point count</li>
+	<li><s>Add fields to model dynamically (medal counts, total count) (http://stackoverflow.com/questions/14488912/adding-a-computed-field-to-every-element-of-an-array-in-an-angularjs-model)</s></li>
+	<li><s>Add default orderby on total point count</s></li>
 	<li>Allow sorting by click (angularjs supports this somehow)</li>
 	<li>Allow changing of the medal values (this may prevent adding fields to model)</li>
 </ul>
+
+	<!-- <div>{{countries}}</div> -->
+	<!-- <div>{{name}}</div> -->
+
 
 <table class="table table-hover table-striped table-responsive" ng-controller="MyCtrl1">
 	<thead>
@@ -28,17 +32,18 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="country in countries | filter:rankFilter">
-			<td><strong>{{country.country_name}}</strong></td>
-			<td>{{country.rank}}</td>
-			<td>{{country.gold_count}}</td>
-			<td>{{country.gold_count * 3}}</td>
-			<td>{{country.silver_count}}</td>
-			<td>{{country.silver_count * 2}}</td>
-			<td>{{country.bronze_count}}</td>
-			<td>{{country.bronze_count * 1}}</td>
-			<td>{{country.medal_count}}</td>
-			<td>{{ (country.gold_count * 3) + (country.silver_count * 2) + (country.bronze_count * 1) }}</td>
+		<!-- <tr ng-repeat="country in countries | filter:rankFilter"> -->
+		<tr ng-repeat="country in countries | orderBy : '-total_points'">
+			<td><strong>{{country.country.text}}</strong></td>
+			<td>{{country.index}}</td>
+			<td>{{country.gold}}</td>
+			<td>{{country.gold_points}}</td>
+			<td>{{country.silver}}</td>
+			<td>{{country.silver_points}}</td>
+			<td>{{country.bronze}}</td>
+			<td>{{country.bronze_points}}</td>
+			<td>{{country.total}}</td>
+			<td>{{country.total_points}}</td>
 		</tr>
 	</tbody>
 </table>
