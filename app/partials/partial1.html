@@ -9,41 +9,55 @@
 	<li><s>Add fields to model dynamically (medal counts, total count) (http://stackoverflow.com/questions/14488912/adding-a-computed-field-to-every-element-of-an-array-in-an-angularjs-model)</s></li>
 	<li><s>Add default orderby on total point count</s></li>
 	<li>Allow sorting by click (angularjs supports this somehow)</li>
-	<li>Allow changing of the medal values (this may prevent adding fields to model)</li>
+	<li><s>Allow changing of the medal values (this may prevent adding fields to model)</s></li>
 </ul>
+
+<div class="main" ng-controller="MyCtrl1">
 
 	<!-- <div>{{countries}}</div> -->
 	<!-- <div>{{name}}</div> -->
 
+	<h2>Try changing the medal values for yourself:</h2>
 
-<table class="table table-hover table-striped table-responsive" ng-controller="MyCtrl1">
-	<thead>
-		<tr>
-			<th>Country</th>
-			<th>Rank</th>
-			<th>Gold</th>
-			<th>Gold Points</th>
-			<th>Silver</th>
-			<th>Silver Points</th>
-			<th>Bronze</th>
-			<th>Bronze Points</th>
-			<th>Total Medals</th>
-			<th>Total Points</th>
-		</tr>
-	</thead>
-	<tbody>
-		<!-- <tr ng-repeat="country in countries | filter:rankFilter"> -->
-		<tr ng-repeat="country in countries | orderBy : '-total_points'">
-			<td><strong>{{country.country.text}}</strong></td>
-			<td>{{country.index}}</td>
-			<td>{{country.gold}}</td>
-			<td>{{country.gold_points}}</td>
-			<td>{{country.silver}}</td>
-			<td>{{country.silver_points}}</td>
-			<td>{{country.bronze}}</td>
-			<td>{{country.bronze_points}}</td>
-			<td>{{country.total}}</td>
-			<td>{{country.total_points}}</td>
-		</tr>
-	</tbody>
-</table>
+	<button ng-click="medalValues(1,1,1)" class="btn btn-default">Normal</button>
+	<button ng-click="medalValues(3,2,1)" class="btn btn-default">Weighted</button>
+	<button ng-click="medalValues(10,3,1)" class="btn btn-default">Gold weighted</button>
+
+	Gold value: <input ng-model="gold_value" ng-change="updatePoints()" />
+	Silver value: <input ng-model="silver_value" ng-change="updatePoints()" />
+	Bronze value: <input ng-model="bronze_value" ng-change="updatePoints()" />
+
+
+	<table class="table table-hover table-striped table-responsive">
+		<thead>
+			<tr>
+				<th>Country</th>
+				<th>Rank</th>
+				<th>Gold</th>
+				<th>Gold Points</th>
+				<th>Silver</th>
+				<th>Silver Points</th>
+				<th>Bronze</th>
+				<th>Bronze Points</th>
+				<th>Total Medals</th>
+				<th>Total Points</th>
+				<th>Sorted Rank</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="country in countries | orderBy : '-total_points'">
+				<td><strong>{{country.country.text}}</strong></td>
+				<td>{{country.index}}</td>
+				<td>{{country.gold}}</td>
+				<td>{{country.gold_points}}</td>
+				<td>{{country.silver}}</td>
+				<td>{{country.silver_points}}</td>
+				<td>{{country.bronze}}</td>
+				<td>{{country.bronze_points}}</td>
+				<td>{{country.total}}</td>
+				<td>{{country.total_points}}</td>
+				<td>{{$index + 1}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
